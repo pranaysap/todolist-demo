@@ -12,13 +12,11 @@ jobs:
       - uses: scribe-security/action-slsa@master
         with:
           target: pranaycshah/todolist-demo:ssca1
-          format: statement-slsa
           scribe-enable: true
           scribe-client-secret: ${{ secrets.SCRIBE_TOKEN }}
 
       - uses: scribe-security/action-verify@master
         with:
           target: pranaycshah/todolist-demo:ssca1
-          input-format: statement-slsa
           scribe-enable: true
           scribe-client-secret: ${{ secrets.SCRIBE_TOKEN }}
