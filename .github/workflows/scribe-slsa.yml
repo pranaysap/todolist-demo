@@ -1,9 +1,9 @@
 name:  scribe_github_workflow
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
 
-on: 
-  push:
-    tags:
-      - "*"
 
 jobs:
   scribe-sign-verify:
