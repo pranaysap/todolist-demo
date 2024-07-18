@@ -19,6 +19,6 @@ jobs:
       - uses: scribe-security/action-verify@master
         with:
           target: pranaycshah/todolist-demo:ssca1
-          input-format: verify-slsa
+          input-format: statement-slsa
           scribe-enable: true
           scribe-client-secret: ${{ secrets.SCRIBE_TOKEN }}
