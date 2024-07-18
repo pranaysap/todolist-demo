@@ -1,0 +1,24 @@
+name:  scribe_github_workflow
+
+on: 
+  push:
+    tags:
+      - "*"
+
+jobs:
+  scribe-sign-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: scribe-security/action-slsa@master
+        with:
+          target: pranaycshah/todolist-demo:ssca1
+          format: json
+          scribe-enable: true
+          scribe-client-secret: ${{ secrets.SCRIBE_TOKEN }}
+
+      - uses: scribe-security/action-verify@master
+        with:
+          target: pranaycshah/todolist-demo:ssca1
+          input-format: json
+          scribe-enable: true
+          scribe-client-secret: ${{ secrets.SCRIBE_TOKEN }}
