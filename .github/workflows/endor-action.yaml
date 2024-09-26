@@ -16,13 +16,15 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'microsoft'
-        java-version: '17'
     - name: Build Package
-      run: mvn clean install
+      id: build
+      run: |
+          # Your normal build workflow targets here
+          mvn clean package
+
+          # Save the location of the maven output files for easier reference
+          ARTIFACT_PATTERN=./target/$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)*.jar
+          echo "artifact_pattern=$ARTIFACT_PATTERN" >> "$GITHUB_OUTPUT"
     - name: Endor Labs Scan Pull Request
       if: github.event_name == 'pull_request'
       uses: endorlabs/github-action@v1.1.4
@@ -45,11 +47,7 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'microsoft'
-        java-version: '17'
+      
     - name: Build Package
       run: mvn clean install
     - name: 'Endor Labs Scan Push to main'
