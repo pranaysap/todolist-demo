@@ -56,11 +56,14 @@ jobs:
           # Save the location of the maven output files for easier reference
           ARTIFACT_PATTERN=./target/$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)*.jar
           echo "artifact_pattern=$ARTIFACT_PATTERN" >> "$GITHUB_OUTPUT"
+          
     - name: 'Endor Labs Scan Push to main'
   #    if: ${{ github.event_name == 'push' }}
       uses: endorlabs/github-action@v1.1.4
       with:
         namespace: 'test-sap' # Replace with your Endor Labs tenant namespace
+        api_key: ${{ secrets.ENDOR_API_CREDENTIALS_KEY }}
+        api_secret: ${{ secrets.ENDOR_API_CREDENTIALS_SECRET }}
         scan_dependencies: true
         scan_secrets: true
         pr: false
